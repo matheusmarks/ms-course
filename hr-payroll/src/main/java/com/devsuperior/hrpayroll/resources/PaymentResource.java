@@ -21,6 +21,13 @@ public class PaymentResource {
     @HystrixCommand(fallbackMethod = "getPaymentAlternative")
     @GetMapping(value = "/{workerId}/days/{days}")
     public ResponseEntity<Payment> getPayment(@PathVariable Long workerId, @PathVariable Integer days) {
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         Payment payment = service.getPayment(workerId, days);
         return ResponseEntity.ok(payment);
     }
